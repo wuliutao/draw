@@ -1,101 +1,145 @@
-import Image from "next/image";
+'use client'
+
+import styles from './page.module.css'
+import { Inter } from 'next/font/google'
+import { useState } from 'react'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isDrawing, setIsDrawing] = useState(false)
+  const [currentTopic, setCurrentTopic] = useState<string | null>(null)
+  const [currentSpeaker, setSpeaker] = useState<string | null>(null)
+  const [usedSpeakers, setUsedSpeakers] = useState<string[]>([])
+  const [remainingSpeakers, setRemainingSpeakers] = useState([
+    "周周",
+    "满义",
+    "小吴",
+    "玲玲",
+    "李琪",
+    "伽奇",
+    "娜娜"
+  ])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const topics = [
+    "待定主题1",
+    "待定主题2",
+    "待定主题3",
+    "待定主题4",
+    "待定主题5",
+    "待定主题6",
+    "待定主题7",
+    "待定主题8",
+    "待定主题9",
+    "待定主题10"
+  ]
+
+  const drawTopic = () => {
+    if (remainingSpeakers.length === 0) {
+      alert("所有人都已经分享过了！")
+      return
+    }
+
+    setIsDrawing(true)
+    let count = 0
+    const interval = setInterval(() => {
+      // 随机抽取主题
+      setCurrentTopic(topics[Math.floor(Math.random() * topics.length)])
+      
+      // 随机显示动画效果
+      setSpeaker(remainingSpeakers[Math.floor(Math.random() * remainingSpeakers.length)])
+      
+      count++
+      if (count > 10) {
+        clearInterval(interval)
+        setIsDrawing(false)
+        
+        // 确定最终抽中的人
+        const finalSpeakerIndex = Math.floor(Math.random() * remainingSpeakers.length)
+        const finalSpeaker = remainingSpeakers[finalSpeakerIndex]
+        
+        // 更新状态
+        setSpeaker(finalSpeaker)
+        setUsedSpeakers([...usedSpeakers, finalSpeaker])
+        setRemainingSpeakers(remainingSpeakers.filter(s => s !== finalSpeaker))
+      }
+    }, 100)
+  }
+
+  return (
+    <main className={styles.main}>
+      {/* 顶部导航栏 */}
+      <nav className={styles.nav}>
+        <div className={styles.logo}>AI应用分享会抽签</div>
+        <div className={styles.navLinks}>
+          <a href="#rules">规则说明</a>
+          <a href="#topics">主题库</a>
+          <a href="#history">历史记录</a>
+          <a href="/auth" className={styles.authButton}>登录/注册</a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </nav>
+
+      {/* 主要内容区 */}
+      <section className={styles.drawSection}>
+        <div className={styles.topicCard}>
+          <h1>AI应用分享会抽签</h1>
+          <p className={styles.description}>
+            点击下方按钮随机抽取分享人和AI相关话题，准备时间2分钟，分享时间自己斟酌
+          </p>
+          
+          <div className={styles.topicDisplay}>
+            {currentTopic && currentSpeaker ? (
+              <>
+                <h2>本次分享信息：</h2>
+                <p className={styles.speaker}>分享人：{currentSpeaker}</p>
+                <p className={styles.topic}>分享主题：{currentTopic}</p>
+                <p className={styles.remainingInfo}>
+                  待分享：{remainingSpeakers.join('、')}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className={styles.placeholder}>等待抽取分享人和主题...</p>
+                <p className={styles.remainingInfo}>
+                  待分享：{remainingSpeakers.join('、')}
+                </p>
+              </>
+            )}
+          </div>
+
+          <button 
+            className={`${styles.drawButton} ${isDrawing ? styles.drawing : ''}`}
+            onClick={drawTopic}
+            disabled={isDrawing || remainingSpeakers.length === 0}
+          >
+            {isDrawing ? '抽取中...' : remainingSpeakers.length === 0 ? '抽签结束' : '开始抽签'}
+          </button>
+        </div>
+      </section>
+
+      {/* 规则说明区 */}
+      <section className={styles.rulesSection} id="rules">
+        <div className={styles.container}>
+          <h2>规则说明</h2>
+          <div className={styles.ruleCards}>
+            <div className={styles.ruleCard}>
+              <div className={styles.ruleIcon}>⏱️</div>
+              <h3>时间控制</h3>
+              <p>准备：2分钟<br/>分享：自定</p>
+            </div>
+            <div className={styles.ruleCard}>
+              <div className={styles.ruleIcon}>🎯</div>
+              <h3>评分标准</h3>
+              <p>主题理解<br/>案例分享<br/>观点创新</p>
+            </div>
+            <div className={styles.ruleCard}>
+              <div className={styles.ruleIcon}>📝</div>
+              <h3>注意事项</h3>
+              <p>可以查阅资料<br/>鼓励互动讨论<br/>分享个人观点</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }

@@ -1,0 +1,139 @@
+.authContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f5f5f7;
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  color: #1d1d1f;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.backButton:hover {
+  color: #0066cc;
+}
+
+.authCard {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.authCard h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #1d1d1f 0%, #434343 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.switchButtons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.switchButton {
+  padding: 0.5rem 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #86868b;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.switchButton.active {
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  color: #1d1d1f;
+}
+
+.inputGroup input {
+  padding: 0.8rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.submitButton {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submitButton:hover {
+  background-color: #0077ed;
+  transform: scale(1.02);
+}
+
+.forgotPassword {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+.forgotPassword a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .authCard {
+    padding: 2rem;
+  }
+
+  .backButton {
+    top: 1rem;
+    left: 1rem;
+  }
+} 
